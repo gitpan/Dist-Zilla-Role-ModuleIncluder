@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::ModuleIncluder;
 {
-  $Dist::Zilla::Plugin::ModuleIncluder::VERSION = '0.001';
+  $Dist::Zilla::Plugin::ModuleIncluder::VERSION = '0.002';
 }
 use version;
 use Moose;
@@ -69,7 +69,7 @@ Dist::Zilla::Plugin::ModuleIncluder - explicitly include modules into a distribu
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 

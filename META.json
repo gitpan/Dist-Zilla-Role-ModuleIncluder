@@ -13,6 +13,11 @@
       "version" : "2"
    },
    "name" : "Dist-Zilla-Role-ModuleIncluder",
+   "no_index" : {
+      "directory" : [
+         "corpus"
+      ]
+   },
    "prereqs" : {
       "configure" : {
          "requires" : {
@@ -63,6 +68,6 @@
          "web" : "http://github.com/Leont/dist-zilla-role-moduleincluder"
       }
    },
-   "version" : "0.001"
+   "version" : "0.002"
 }
 
