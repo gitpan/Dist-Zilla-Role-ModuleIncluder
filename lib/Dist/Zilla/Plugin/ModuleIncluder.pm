@@ -1,6 +1,6 @@
 package Dist::Zilla::Plugin::ModuleIncluder;
 {
-  $Dist::Zilla::Plugin::ModuleIncluder::VERSION = '0.002';
+  $Dist::Zilla::Plugin::ModuleIncluder::VERSION = '0.003';
 }
 use version;
 use Moose;
@@ -59,7 +59,7 @@ no Moose;
 
 #ABSTRACT: explicitly include modules into a distribution
 
-
+__END__
 
 =pod
 
@@ -69,7 +69,7 @@ Dist::Zilla::Plugin::ModuleIncluder - explicitly include modules into a distribu
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
@@ -117,7 +117,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-

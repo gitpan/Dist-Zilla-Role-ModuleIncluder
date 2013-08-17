@@ -1,5 +1,9 @@
 Revision history for Dist-Zilla-Role-ModuleIncluder
 
+0.003     2013-08-17 13:51:40 Europe/Amsterdam
+          Fix precedence issue in return … and …
+          Don't rescan on increased module dependency
+
 0.002     2012-03-31 17:42:47 Europe/Amsterdam
           Added corpus/ to no_index
 

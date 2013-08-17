@@ -1,6 +1,6 @@
 package Dist::Zilla::Role::ModuleIncluder;
 {
-  $Dist::Zilla::Role::ModuleIncluder::VERSION = '0.002';
+  $Dist::Zilla::Role::ModuleIncluder::VERSION = '0.003';
 }
 
 use Moose::Role;
@@ -25,19 +25,26 @@ sub _mod_to_filename {
 my $version = \%Module::CoreList::version;
 
 ## no critic (Variables::ProhibitPackageVars)
-sub _core_has {
-	my ($module, $wanted_version, $background_perl) = @_;
-	return exists $version->{$background_perl}{$module} and $version->{$background_perl}{$module} >= $wanted_version || 0 >= $wanted_version;
+
+sub _should_skip {
+	my ($module, $version, $blacklist, $background) = @_;
+	return $blacklist->{$module} || exists $background->{$module} && ($version <= 0 || $background->{$module} >= $version);
 }
 
 sub _get_reqs {
 	my ($reqs, $scanner, $module, $background, $blacklist) = @_;
 	my $module_file = Module::Metadata->find_module_by_name($module) or confess "Could not find module $module";
 	my %new_reqs = %{ $scanner->scan_file($module_file)->as_string_hash };
-	my @real_reqs = grep { not $blacklist->{$_} and (not defined $reqs->{$_} or $reqs->{$_} < $new_reqs{$_} ) and not _core_has($_, $new_reqs{$_}, $background) } keys %new_reqs;
+	my @real_reqs = grep { !_should_skip($_, $new_reqs{$_}, $blacklist, $background) } keys %new_reqs;
 	for my $req (@real_reqs) {
-		$reqs->{$req} = $new_reqs{$req};
-		_get_reqs($reqs, $scanner, $req, $background, $blacklist);
+		if (defined $reqs->{$module}) {
+			next if $reqs->{$module} >= $new_reqs{$req};
+			$reqs->{$req} = $new_reqs{$req};
+		}
+		else {
+			$reqs->{$req} = $new_reqs{$req};
+			_get_reqs($reqs, $scanner, $req, $background, $blacklist);
+		}
 	}
 	return;
 }
@@ -53,7 +60,7 @@ sub include_modules {
 	my %reqs;
 	my $scanner = Perl::PrereqScanner->new;
 	my %blacklist = map { ( $_ => 1 ) } 'perl', @{ $options->{blacklist} || [] };
-	_get_reqs(\%reqs, $scanner, $_, _version_normalize($background), \%blacklist) for keys %modules;
+	_get_reqs(\%reqs, $scanner, $_, $version->{ _version_normalize($background) }, \%blacklist) for keys %modules;
 	my @modules = grep { !$modules{$_} } keys %modules;
 	my %location_for = map { _mod_to_filename($_) => Module::Metadata->find_module_by_name($_) } uniq(@modules, keys %reqs);
 	for my $filename (keys %location_for) {
@@ -67,7 +74,7 @@ sub include_modules {
 
 #ABSTRACT: Include a module and its dependencies in inc/
 
-
+__END__
 
 =pod
 
@@ -77,7 +84,7 @@ Dist::Zilla::Role::ModuleIncluder - Include a module and its dependencies in inc
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 DESCRIPTION
 
@@ -101,8 +108,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
-
-
