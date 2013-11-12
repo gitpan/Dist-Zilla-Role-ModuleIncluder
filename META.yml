@@ -3,17 +3,18 @@ abstract: 'Include a module and its dependencies in inc/'
 author:
   - 'Leon Timmermans <leont@cpan.org>'
 build_requires:
-  File::Find: 0
-  File::Temp: 0
+  File::Spec: 0
+  IO::Handle: 0
+  IPC::Open3: 0
   Path::Class: 0
   Test::DZil: 0
   Test::More: 0.88
   strict: 0
   warnings: 0
 configure_requires:
-  Module::Build::Tiny: 0.025
+  Module::Build::Tiny: 0.030
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 5.005, CPAN::Meta::Converter version 2.132830'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -22,11 +23,18 @@ name: Dist-Zilla-Role-ModuleIncluder
 no_index:
   directory:
     - corpus
+provides:
+  Dist::Zilla::Plugin::ModuleIncluder:
+    file: lib/Dist/Zilla/Plugin/ModuleIncluder.pm
+    version: 0.004
+  Dist::Zilla::Role::ModuleIncluder:
+    file: lib/Dist/Zilla/Role/ModuleIncluder.pm
+    version: 0.004
 requires:
   Dist::Zilla::File::InMemory: 0
   Dist::Zilla::Role::FileGatherer: 0
   Dist::Zilla::Role::FileInjector: 0
-  File::Slurp: 0
+  File::Slurp::Tiny: 0
   List::MoreUtils: 0
   Module::CoreList: 0
   Module::Metadata: 0
@@ -41,4 +49,4 @@ requires:
 resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=Dist-Zilla-Role-ModuleIncluder
   repository: git://github.com/Leont/dist-zilla-role-moduleincluder.git
-version: 0.003
+version: 0.004

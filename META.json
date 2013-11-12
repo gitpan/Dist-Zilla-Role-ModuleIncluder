@@ -4,7 +4,7 @@
       "Leon Timmermans <leont@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 5.005, CPAN::Meta::Converter version 2.132830",
    "license" : [
       "perl_5"
    ],
@@ -21,7 +21,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build::Tiny" : "0.025"
+            "Module::Build::Tiny" : "0.030"
          }
       },
       "develop" : {
@@ -36,7 +36,7 @@
             "Dist::Zilla::File::InMemory" : "0",
             "Dist::Zilla::Role::FileGatherer" : "0",
             "Dist::Zilla::Role::FileInjector" : "0",
-            "File::Slurp" : "0",
+            "File::Slurp::Tiny" : "0",
             "List::MoreUtils" : "0",
             "Module::CoreList" : "0",
             "Module::Metadata" : "0",
@@ -52,14 +52,25 @@
       },
       "test" : {
          "requires" : {
-            "File::Find" : "0",
-            "File::Temp" : "0",
+            "File::Spec" : "0",
+            "IO::Handle" : "0",
+            "IPC::Open3" : "0",
             "Path::Class" : "0",
             "Test::DZil" : "0",
             "Test::More" : "0.88",
             "strict" : "0",
             "warnings" : "0"
          }
+      }
+   },
+   "provides" : {
+      "Dist::Zilla::Plugin::ModuleIncluder" : {
+         "file" : "lib/Dist/Zilla/Plugin/ModuleIncluder.pm",
+         "version" : "0.004"
+      },
+      "Dist::Zilla::Role::ModuleIncluder" : {
+         "file" : "lib/Dist/Zilla/Role/ModuleIncluder.pm",
+         "version" : "0.004"
       }
    },
    "release_status" : "stable",
@@ -74,6 +85,6 @@
          "web" : "https://github.com/Leont/dist-zilla-role-moduleincluder"
       }
    },
-   "version" : "0.003"
+   "version" : "0.004"
 }
 
